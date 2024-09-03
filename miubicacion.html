@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./css/miubicacion.css">
+  <title>Síntesis Curricular Carlos Castro</title>
+</head>
+<body>
+  <div class="header">
+    <h1>Mi Ubicación.</h1>
+  </div>
+  <div class="row">
+    <div class="col-3 col-s-3 menu">
+      <ul>
+        
+        <li><a href="./index.html">Mi Síntesis Curricular</a></li>
+        <li><a href="./misaludo.html">Mi Saludo</a></li>
+        <li><a href="./miubicacion.html">Mi Ubicación</a></li>
+      </ul>
+    </div>
+    <div class="col-6 col-s-9">
+      <h1>Mi Ubicación - Geolocalización.</h1>
+      <button onclick="obtener()" id="obtener">Obtener Coordenadas</button>
+      <button disabled onclick="ver()" id="ver">Ver en un Mapa</button>
+      <div id="coordenadas"></div>
+    <script>
+      let latitud, longitud, mensaje, mensajeError, url;
+      function obtener(){
+          mensaje = document.getElementById("coordenadas");
+          if (navigator.geolocation) {mensaje.innerHTML = "El navegador si soporta geolocalizacion"
+        navigator.geolocation.getCurrentPosition(obtenerCoordenadas, obtenerError);
+      } else {mnsaje.innerHTML = "El navegador no soporta geolocalizacion";}
+    }
+      function ver(){
+        url = "https://www.openstreetmap.org/#map=15/"+latitud+"/"+longitud;
+        window.open(url);
+      }
+      function obtenerCoordenadas(p){
+        console.log(p);
+        console.warn(p.coords.latitude);
+        console.warn(p.coords.longitude);
+        latitud = p.coords.latitude;
+        longitud = p.coords.longitude 
+        mensaje.style.color = "green";
+        mensaje = document.getElementById("coordenadas");
+        mensaje.innerHTML = "Latitud: "+latitud+"<br>"+"Longitud: "+longitud;
+        document.getElementById("ver").disabled = false;
+      }
+      function obtenerError(e){
+        console.log(e);
+        switch (e.code) {
+          case 1:
+          mensajeError = "Acceso a ubicacion geografica fue negado por el usuario.";
+            break;
+          case 2:
+          mensajeError = "Ubicacion geografica no disponible.";
+            break;
+          case 3:
+          mensajeError = "Se excedio el tiempo de espera obtener la ubicacion geografica.";
+            break;
+          default:
+          mensajeError = "Se ha producido una falla, al intentar obtener la ubicacion geografica.";
+            break;
+        }
+        mensaje = document.getElementById("coordenadas");
+        mensaje.style.color = "red";
+        mensaje.innerHTML = mensajeError;
+      }
+    </script>
+    </div>
+    </div>
+    <div class="col-3 col-s-12">
+    </div>
+  </div>
+  <div class="footer">
+    <p>Para observar el diseño adaptativo de esta síntesis curricular, acceda a la opción de inspección del navegador y elija el dispositivo a través del cual quiere observar la página.</p>
+  </div>
+</body>
+</html>
